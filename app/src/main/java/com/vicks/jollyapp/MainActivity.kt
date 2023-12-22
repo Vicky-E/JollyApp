@@ -1,5 +1,7 @@
 package com.vicks.jollyapp
 
+import android.graphics.Paint.Align
+import android.graphics.drawable.Icon
 import android.graphics.drawable.shapes.Shape
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,14 +21,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.selection.TextSelectionColors
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -108,9 +113,9 @@ fun First_Onboard(navControl: NavHostController){
     Column(
         Modifier
             .fillMaxSize()
-            .padding(20.dp, 56.dp), verticalArrangement = Arrangement.spacedBy(56.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            .padding(20.dp, 16.dp), verticalArrangement = Arrangement.spacedBy(32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
-            painter = painterResource(id = R.drawable.searchi),
+            painter = painterResource(id = R.drawable.discover),
             contentDescription = "Picture of woman browsing Online",
             modifier = Modifier.size(388.dp,400.dp)
         )
@@ -118,19 +123,19 @@ fun First_Onboard(navControl: NavHostController){
             Text(text = "Discover new Recreational Places", fontSize = 20.sp, fontFamily = medFont)
             Text("Find new places to relax and have fun with your loved ones", fontSize = 16.sp, fontFamily = regFont, textAlign= TextAlign.Center)
         }
-        Column(Modifier.padding(top=30.dp),verticalArrangement = Arrangement.spacedBy(50.dp), horizontalAlignment = Alignment.CenterHorizontally){
+        Column(verticalArrangement = Arrangement.spacedBy(40.dp), horizontalAlignment = Alignment.CenterHorizontally){
             Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
                 Box(
                     Modifier
-                        .size(10.dp, 10.dp)
+                        .size(8.dp, 8.dp)
                         .background(darkGreen, CircleShape))
                 Box(
                     Modifier
-                        .size(10.dp, 10.dp)
+                        .size(8.dp, 8.dp)
                         .background(grey, CircleShape))
                 Box(
                     Modifier
-                        .size(10.dp, 10.dp)
+                        .size(8.dp, 8.dp)
                         .background(grey, CircleShape))
 
 
@@ -153,7 +158,7 @@ fun Second_Onboard(navControl: NavHostController) {
     Column(
         Modifier
             .fillMaxSize()
-            .padding(20.dp, 56.dp), verticalArrangement = Arrangement.spacedBy(56.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            .padding(20.dp, 16.dp), verticalArrangement = Arrangement.spacedBy(32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(id = R.drawable.navii),
             contentDescription = "Picture of woman using map",
@@ -163,19 +168,19 @@ fun Second_Onboard(navControl: NavHostController) {
             Text(text = "No More Getting Lost", fontSize = 20.sp, fontFamily = medFont)
             Text("Never lose your way again with Jolly get Accurate directions to Your Destination", fontSize = 16.sp, fontFamily = regFont, textAlign= TextAlign.Center)
         }
-        Column(Modifier.padding(top=30.dp),verticalArrangement = Arrangement.spacedBy(50.dp), horizontalAlignment = Alignment.CenterHorizontally){
+        Column(verticalArrangement = Arrangement.spacedBy(40.dp), horizontalAlignment = Alignment.CenterHorizontally){
             Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
                 Box(
                     Modifier
-                        .size(10.dp, 10.dp)
+                        .size(8.dp, 8.dp)
                         .background(grey, CircleShape))
                 Box(
                     Modifier
-                        .size(10.dp, 10.dp)
+                        .size(8.dp, 8.dp)
                         .background(darkGreen, CircleShape))
                 Box(
                     Modifier
-                        .size(10.dp, 10.dp)
+                        .size(8.dp, 8.dp)
                         .background(grey, CircleShape))
 
 
@@ -195,7 +200,7 @@ fun Last_Onboard(navControl: NavHostController) {
     Column(
         Modifier
             .fillMaxSize()
-            .padding(20.dp, 56.dp), verticalArrangement = Arrangement.spacedBy(56.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            .padding(20.dp, 16.dp), verticalArrangement = Arrangement.spacedBy(40.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(id = R.drawable.trendyi),
             contentDescription = "Picture of woman browsing trending places on her phone",
@@ -205,19 +210,19 @@ fun Last_Onboard(navControl: NavHostController) {
             Text(text = "Discover Trendy Places", fontSize = 20.sp, fontFamily = medFont)
             Text("Get Weekly Updates on the Top Trendy Fun Place to Visit", fontSize = 16.sp, fontFamily = regFont, textAlign= TextAlign.Center)
         }
-        Column(Modifier.padding(top=30.dp),verticalArrangement = Arrangement.spacedBy(32.dp), horizontalAlignment = Alignment.CenterHorizontally){
+        Column(verticalArrangement = Arrangement.spacedBy(40.dp), horizontalAlignment = Alignment.CenterHorizontally){
             Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
                 Box(
                     Modifier
-                        .size(10.dp, 10.dp)
+                        .size(8.dp, 8.dp)
                         .background(grey, CircleShape))
                 Box(
                     Modifier
-                        .size(10.dp, 10.dp)
+                        .size(8.dp, 8.dp)
                         .background(grey, CircleShape))
                 Box(
                     Modifier
-                        .size(10.dp, 10.dp)
+                        .size(8.dp, 8.dp)
                         .background(darkGreen, CircleShape))
 
 
@@ -251,32 +256,85 @@ fun SignUp() {
         //var city by remember { mutableStateOf("") }
     var loading by remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
+    var tick by remember { mutableStateOf(false)}
+    
     var currentProgress by remember { mutableStateOf(0f) }
     Column(verticalArrangement = Arrangement.spacedBy(40.dp),modifier=Modifier.padding(20.dp,24.dp)) {
-        LinearProgressIndicator(color = SeaGreen, trackColor = grey, progress = currentProgress)
+        LinearProgressIndicator(color = SeaGreen, trackColor = grey, progress = currentProgress,modifier= Modifier.fillMaxWidth())
        Row(horizontalArrangement = Arrangement.Start){
            Text("Create an Account", fontSize = 24.sp, fontFamily = medFont)
 
        }
-        Column() {
+        Column(verticalArrangement =Arrangement.spacedBy(20.dp), horizontalAlignment = Alignment.CenterHorizontally ) {
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
                 label = { Text("Email") },
                 placeholder = { Text("Enter your email") },
                 modifier = Modifier
-                    .size(388.dp, 50.dp),
-                shape = RoundedCornerShape(4.dp)
+                    .size(388.dp, 60.dp),
+                shape = RoundedCornerShape(8.dp),
+                trailingIcon = {Icon(painterResource(id = R.drawable.baseline_cancel_24),"icon of email",Modifier.size(16.dp,16.dp),tint=grey)}
+                )
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text("Password") },
+                placeholder = { Text("Enter a password") },
+                modifier = Modifier
+                    .size(388.dp, 60.dp),
+                shape = RoundedCornerShape(8.dp),
+                trailingIcon = {IconButton(onClick = { },
+                    content = {Icon(painter = painterResource(id = R.drawable.baseline_remove_red_eye_24), contentDescription = "eye icon",tint= grey)})}
             )
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text("Email") },
-                placeholder = { Text("Enter your email") },
+                label = { Text("Confirm Password") },
+                placeholder = { Text("Re-enter password") },
                 modifier = Modifier
-                    .size(388.dp, 50.dp),
-                shape = RoundedCornerShape(4.dp)
+                    .size(388.dp, 60.dp),
+                shape = RoundedCornerShape(8.dp),
+                trailingIcon = {IconButton(onClick = { },
+                    content = {Icon(painter = painterResource(id = R.drawable.baseline_remove_red_eye_24), contentDescription = "eye icon",tint= grey)})}
             )
+            Row(horizontalArrangement = Arrangement.spacedBy(2.dp), verticalAlignment = Alignment.CenterVertically,modifier = Modifier.fillMaxWidth()){
+                    Checkbox(checked = tick, onCheckedChange = {!tick},modifier= Modifier.padding(0.dp))
+                    Text("I accept the terms and condition",fontSize = 16.sp, fontFamily = regFont)
+                }
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally,modifier=Modifier.padding(top = 32.dp)) {
+                Button(onClick = { /*TODO*/ },modifier= Modifier
+                    .size(388.dp, 50.dp),
+                    shape = RoundedCornerShape(12.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = SeaGreen, contentColor = White26)) {
+                    Text("Create Account",fontSize = 16.sp,fontFamily = medFont,textAlign = TextAlign.Center)
+                }
+                OutlinedButton(onClick = { /*TODO*/ },modifier= Modifier
+                    .size(388.dp, 50.dp),
+                    shape = RoundedCornerShape(12.dp)) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.logo_google),
+                            contentDescription = "Google Logo",
+                            modifier = Modifier.size(24.dp, 24.dp)
+                        )
+                        Text(
+                            "Sign Up with Google",
+                            fontSize = 16.sp,
+                            fontFamily = medFont,
+                            textAlign = TextAlign.Center,
+                            color = Brown
+                        )
+                    }
+                }
+
+
+
+            }
+
         }
 
 
@@ -287,7 +345,7 @@ fun SignUp() {
 
 @Composable
 fun MyHost(navControl: NavHostController) {
-    NavHost(navController = navControl, startDestination = "splashScreen") {
+    NavHost(navController = navControl, startDestination = "First_Onboard") {
         composable("splashScreen") {
             SplashScreen(navControl)
         }
