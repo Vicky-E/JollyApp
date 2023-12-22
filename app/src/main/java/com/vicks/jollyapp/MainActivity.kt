@@ -1,14 +1,10 @@
 package com.vicks.jollyapp
 
-import android.graphics.Paint.Align
-import android.graphics.drawable.Icon
-import android.graphics.drawable.shapes.Shape
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,23 +12,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
-import androidx.compose.foundation.text.selection.TextSelectionColors
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -42,7 +31,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,11 +42,13 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -78,7 +68,7 @@ class MainActivity : ComponentActivity() {
             JollyAppTheme {
                 // A surface container using the 'background' color from the theme
                 val host= rememberNavController()
-                MyHost(host)
+                MyHost(host, JollyView(application))
             }
         }
     }
@@ -115,7 +105,7 @@ fun First_Onboard(navControl: NavHostController){
             .fillMaxSize()
             .padding(20.dp, 16.dp), verticalArrangement = Arrangement.spacedBy(32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
-            painter = painterResource(id = R.drawable.discover),
+            painter = painterResource(id = R.drawable.searchi),
             contentDescription = "Picture of woman browsing Online",
             modifier = Modifier.size(388.dp,400.dp)
         )
@@ -228,7 +218,7 @@ fun Last_Onboard(navControl: NavHostController) {
 
 
             }
-            Button(onClick = { /*TODO*/ },modifier= Modifier
+            Button(onClick = {navControl.navigate("Sign Up") },modifier= Modifier
                 .size(388.dp, 48.dp),
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = SeaGreen, contentColor = White26)) {
@@ -249,69 +239,71 @@ fun Last_Onboard(navControl: NavHostController) {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
-fun SignUp() {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-        //var city by remember { mutableStateOf("") }
-    var loading by remember { mutableStateOf(false) }
-    val scope = rememberCoroutineScope()
-    var tick by remember { mutableStateOf(false)}
-    
-    var currentProgress by remember { mutableStateOf(0f) }
-    Column(verticalArrangement = Arrangement.spacedBy(40.dp),modifier=Modifier.padding(20.dp,24.dp)) {
-        LinearProgressIndicator(color = SeaGreen, trackColor = grey, progress = currentProgress,modifier= Modifier.fillMaxWidth())
+fun SignUp(navControl: NavHostController,appView: JollyView) {
+        var valCheck by remember{ mutableStateOf(false) }
+        var hide by remember{ mutableStateOf(false) }
+        var chide by remember{ mutableStateOf(false) }
+
+
+    Column(verticalArrangement = Arrangement.spacedBy(40.dp),modifier=Modifier.padding(20.dp,32.dp)) {
        Row(horizontalArrangement = Arrangement.Start){
            Text("Create an Account", fontSize = 24.sp, fontFamily = medFont)
 
        }
-        Column(verticalArrangement =Arrangement.spacedBy(20.dp), horizontalAlignment = Alignment.CenterHorizontally ) {
+        Column(verticalArrangement =Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally ) {
             OutlinedTextField(
-                value = email,
-                onValueChange = { email = it },
+                value = appView.JData.email.value,
+                onValueChange = { appView.JData.email.value = it },
                 label = { Text("Email") },
                 placeholder = { Text("Enter your email") },
+                colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown),
                 modifier = Modifier
                     .size(388.dp, 60.dp),
                 shape = RoundedCornerShape(8.dp),
-                trailingIcon = {Icon(painterResource(id = R.drawable.baseline_cancel_24),"icon of email",Modifier.size(16.dp,16.dp),tint=grey)}
+                trailingIcon = {Icon(painterResource(id = R.drawable.baseline_cancel_24),"icon of cancel ",Modifier.size(20.dp,20.dp),tint=grey)}
                 )
             OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
+                value = appView.JData.password.value,
+                onValueChange = {appView.JData.password.value = it },
                 label = { Text("Password") },
+                colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown),
                 placeholder = { Text("Enter a password") },
                 modifier = Modifier
                     .size(388.dp, 60.dp),
+                visualTransformation = if(hide) VisualTransformation.None else PasswordVisualTransformation(),
                 shape = RoundedCornerShape(8.dp),
-                trailingIcon = {IconButton(onClick = { },
-                    content = {Icon(painter = painterResource(id = R.drawable.baseline_remove_red_eye_24), contentDescription = "eye icon",tint= grey)})}
+                trailingIcon = {IconButton(onClick = {hide = !hide },
+                    content = {Icon(painter = painterResource(id = if (hide) R.drawable.baseline_remove_red_eye_24 else R.drawable.eyec), contentDescription = "eye icon",modifier=Modifier.size(20.dp,20.dp),tint= grey)})}
             )
             OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
+                value = appView.JData.cpassword.value,
+                onValueChange = {appView.JData.cpassword.value = it },
                 label = { Text("Confirm Password") },
                 placeholder = { Text("Re-enter password") },
+                colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown),
+                visualTransformation = if(chide) VisualTransformation.None else PasswordVisualTransformation(),
                 modifier = Modifier
                     .size(388.dp, 60.dp),
                 shape = RoundedCornerShape(8.dp),
-                trailingIcon = {IconButton(onClick = { },
-                    content = {Icon(painter = painterResource(id = R.drawable.baseline_remove_red_eye_24), contentDescription = "eye icon",tint= grey)})}
+                trailingIcon = {IconButton(onClick = {chide = !chide  },
+                    content = {Icon(painter = painterResource(id = if (chide) R.drawable.baseline_remove_red_eye_24 else R.drawable.eyec), contentDescription = "eye icon",modifier=Modifier.size(20.dp,20.dp),tint= grey)})}
             )
             Row(horizontalArrangement = Arrangement.spacedBy(2.dp), verticalAlignment = Alignment.CenterVertically,modifier = Modifier.fillMaxWidth()){
-                    Checkbox(checked = tick, onCheckedChange = {!tick},modifier= Modifier.padding(0.dp))
+                    Checkbox(checked = appView.JData.tick.value, onCheckedChange = {appView.JData.tick.value = it},modifier= Modifier.padding(0.dp))
                     Text("I accept the terms and condition",fontSize = 16.sp, fontFamily = regFont)
                 }
-            Column(verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally,modifier=Modifier.padding(top = 32.dp)) {
-                Button(onClick = { /*TODO*/ },modifier= Modifier
+                Text(text = appView.JData.error.value,color = Color.Red,fontSize = 16.sp,fontFamily = regFont)
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally,modifier=Modifier.padding(top = 20.dp)) {
+                Button(onClick = {valCheck = appView.validate()
+                                 if (valCheck) navControl.navigate("Home Page")},modifier= Modifier
                     .size(388.dp, 50.dp),
-                    shape = RoundedCornerShape(12.dp),
+                    shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = SeaGreen, contentColor = White26)) {
                     Text("Create Account",fontSize = 16.sp,fontFamily = medFont,textAlign = TextAlign.Center)
                 }
                 OutlinedButton(onClick = { /*TODO*/ },modifier= Modifier
                     .size(388.dp, 50.dp),
-                    shape = RoundedCornerShape(12.dp)) {
+                    shape = RoundedCornerShape(10.dp)) {
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         verticalAlignment = Alignment.CenterVertically
@@ -330,9 +322,18 @@ fun SignUp() {
                         )
                     }
                 }
+                Row(horizontalArrangement = Arrangement.spacedBy(2.dp),
+                    verticalAlignment = Alignment.CenterVertically) {
+                    Text("Already have an Account?",fontSize=16.sp, fontFamily = regFont)
+                    TextButton(
+                        onClick = { },
+                        modifier = Modifier.padding(0.dp),
+                        colors = ButtonDefaults.textButtonColors(contentColor = SeaGreen)
+                    ) {
+                        Text("Sign In", fontSize = 16.sp, fontFamily = medFont)
 
-
-
+                    }
+                }
             }
 
         }
@@ -341,10 +342,15 @@ fun SignUp() {
     }
 }
 
-
+@Composable
+fun HomePage(navControl:NavHostController) {
+        Row(modifier = Modifier.fillMaxSize(),verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
+            Text("Page Coming Soon",fontSize = 32.sp, fontFamily = medFont,color = SeaGreen)
+        }
+}
 
 @Composable
-fun MyHost(navControl: NavHostController) {
+fun MyHost(navControl: NavHostController,appView:JollyView) {
     NavHost(navController = navControl, startDestination = "First_Onboard") {
         composable("splashScreen") {
             SplashScreen(navControl)
@@ -357,6 +363,12 @@ fun MyHost(navControl: NavHostController) {
         }
         composable("Last_Onboard") {
             Last_Onboard(navControl)
+        }
+        composable("Sign Up") {
+            SignUp(navControl,appView)
+        }
+        composable("Home Page") {
+            HomePage(navControl)
         }
 
     }
