@@ -22,6 +22,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.BottomAppBar
@@ -454,12 +455,17 @@ fun LogIn(navControl: NavHostController,appView: JollyView) {
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
-@Preview(showSystemUi = true, showBackground = true)
+@Preview()
 @Composable
 fun HomePage() {
     val scrollState = rememberScrollState()
+    val scrollStateT = rememberScrollState()
+    val verticalState = rememberScrollState()
+
     //LaunchedEffect(Unit) { scrollState.animateScrollTo(100) }
-    Column(Modifier.padding(20.dp,20.dp), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(
+        Modifier
+            .padding(20.dp, 20.dp), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Column(verticalArrangement = Arrangement.spacedBy(12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Row(Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween) {
                 Text("Hello Ally", fontSize = 20.sp, fontFamily = medFont,color = Brown)
@@ -535,6 +541,70 @@ fun HomePage() {
                     Row(horizontalArrangement = Arrangement.Start){Text("House 43", fontSize = 20.sp, fontFamily = medFont)}
                     Row(horizontalArrangement = Arrangement.Start){Text("Restaurant",fontSize = 16.sp, fontFamily = regFont)}
                 }
+        }
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text("Trending", fontSize = 20.sp, fontFamily = medFont)
+            Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "Right arrow Icon" )
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically,modifier = Modifier.horizontalScroll(scrollStateT)) {
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally){
+                Image(painter = painterResource(id = R.drawable.cafedevie), contentDescription = "picture of Cafe De Vie",modifier = Modifier
+                    .size(170.dp, 230.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                )
+                Row(horizontalArrangement = Arrangement.Start){Text("Cafe De Vie", fontSize = 20.sp, fontFamily = medFont)}
+                Row(horizontalArrangement = Arrangement.Start){ Text("Restaurant",fontSize = 16.sp, fontFamily = regFont)}
+            }
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp),horizontalAlignment = Alignment.CenterHorizontally) {
+                Image(
+                    painter = painterResource(id = R.drawable.nikeart),
+                    contentDescription = "picture of nike art gallery",
+                    modifier = Modifier
+                        .size(170.dp, 230.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+                Row(horizontalArrangement = Arrangement.Start) {
+                    Text(
+                        "Nike Art",
+                        fontSize = 20.sp,
+                        fontFamily = medFont
+                    )
+                }
+                Row(horizontalArrangement = Arrangement.Start) {
+                    Text(
+                        "Arts and Culture",
+                        fontSize = 16.sp,
+                        fontFamily = regFont
+                    )
+                }
+            }
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp),horizontalAlignment = Alignment.CenterHorizontally) {
+                Image(
+                    painter = painterResource(id = R.drawable.beautyaddicts),
+                    contentDescription = "picture of Beauty Addict spa",
+                    modifier = Modifier
+                        .size(170.dp, 230.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+                Row(horizontalArrangement = Arrangement.Start) {
+                    Text(
+                        "Beauty Addicts",
+                        fontSize = 20.sp,
+                        fontFamily = medFont
+                    )
+                }
+                Row(horizontalArrangement = Arrangement.Start) {
+                    Text("Spa", fontSize = 16.sp, fontFamily = regFont)
+                }
+            }
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp),horizontalAlignment = Alignment.CenterHorizontally){
+                Image(painter = painterResource(id = R.drawable.housefortythree), contentDescription = "picture of house 43 restaurant",modifier = Modifier
+                    .size(170.dp, 230.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                )
+                Row(horizontalArrangement = Arrangement.Start){Text("House 43", fontSize = 20.sp, fontFamily = medFont)}
+                Row(horizontalArrangement = Arrangement.Start){Text("Restaurant",fontSize = 16.sp, fontFamily = regFont)}
+            }
         }
 
         Scaffold(bottomBar = {
