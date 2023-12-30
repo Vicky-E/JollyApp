@@ -3,8 +3,11 @@ package com.vicks.jollyapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,20 +17,34 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.BottomAppBarDefaults
+import androidx.compose.material3.BottomAppBarDefaults.containerColor
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -326,6 +343,100 @@ fun SignUp(navControl: NavHostController,appView: JollyView) {
                     verticalAlignment = Alignment.CenterVertically) {
                     Text("Already have an Account?",fontSize=16.sp, fontFamily = regFont)
                     TextButton(
+                        onClick = {navControl.navigate("Log in")},
+                        modifier = Modifier.padding(0.dp),
+                        colors = ButtonDefaults.textButtonColors(contentColor = SeaGreen)
+                    ) {
+                        Text("Sign In", fontSize = 16.sp, fontFamily = medFont)
+
+                    }
+                }
+            }
+
+        }
+
+
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LogIn(navControl: NavHostController,appView: JollyView) {
+    var checkVal by remember{ mutableStateOf(false) }
+    var visible by remember{ mutableStateOf(false) }
+
+    Column(verticalArrangement = Arrangement.spacedBy(40.dp),modifier=Modifier.padding(20.dp,32.dp)) {
+        Row(horizontalArrangement = Arrangement.Start){
+            Text("Welcome Back", fontSize = 24.sp, fontFamily = medFont)
+
+        }
+        Column(verticalArrangement =Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally ) {
+            OutlinedTextField(
+                value = appView.JData.email.value,
+                onValueChange = { appView.JData.email.value = it },
+                label = { Text("Email") },
+                placeholder = { Text("Enter your email") },
+                colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown),
+                modifier = Modifier
+                    .size(388.dp, 60.dp),
+                shape = RoundedCornerShape(8.dp),
+                trailingIcon = {Icon(painterResource(id = R.drawable.baseline_cancel_24),"icon of cancel ",Modifier.size(20.dp,20.dp),tint=grey)}
+            )
+            OutlinedTextField(
+                value = appView.JData.password.value,
+                onValueChange = {appView.JData.password.value = it },
+                label = { Text("Password") },
+                colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown),
+                placeholder = { Text("Enter a password") },
+                modifier = Modifier
+                    .size(388.dp, 60.dp),
+                visualTransformation = if(visible) VisualTransformation.None else PasswordVisualTransformation(),
+                shape = RoundedCornerShape(8.dp),
+                trailingIcon = {IconButton(onClick = {visible= !visible },
+                    content = {Icon(painter = painterResource(id = if (visible) R.drawable.baseline_remove_red_eye_24 else R.drawable.eyec), contentDescription = "eye icon",modifier=Modifier.size(20.dp,20.dp),tint= grey)})}
+            )
+            Row(Modifier.fillMaxWidth(),Arrangement.spacedBy(60.dp),Alignment.CenterVertically){
+                Row(horizontalArrangement = Arrangement.spacedBy(2.dp), verticalAlignment = Alignment.CenterVertically){
+                    Checkbox(checked = appView.JData.tick.value, onCheckedChange = {appView.JData.tick.value = it},modifier= Modifier.padding(0.dp))
+                    Text("Remember me",fontSize = 16.sp, fontFamily = regFont)
+                }
+                Text("Forgot Password?",fontSize=16.sp, fontFamily = medFont,color= SeaGreen)
+            }
+
+            Text(text = appView.JData.error.value,color = Color.Red,fontSize = 16.sp,fontFamily = regFont)
+            Column(verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally,modifier=Modifier.padding(top = 20.dp)) {
+                Button(onClick = {checkVal = appView.loginValidate()
+                    if (checkVal) navControl.navigate("Home Page")},modifier= Modifier
+                    .size(388.dp, 50.dp),
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = SeaGreen, contentColor = White26)) {
+                    Text("Sign In",fontSize = 16.sp,fontFamily = medFont,textAlign = TextAlign.Center)
+                }
+                OutlinedButton(onClick = { /*TODO*/ },modifier= Modifier
+                    .size(388.dp, 50.dp),
+                    shape = RoundedCornerShape(10.dp)) {
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            painter = painterResource(id = R.drawable.logo_google),
+                            contentDescription = "Google Logo",
+                            modifier = Modifier.size(24.dp, 24.dp)
+                        )
+                        Text(
+                            "Continue with Google",
+                            fontSize = 16.sp,
+                            fontFamily = medFont,
+                            textAlign = TextAlign.Center,
+                            color = Brown
+                        )
+                    }
+                }
+                Row(horizontalArrangement = Arrangement.spacedBy(2.dp),
+                    verticalAlignment = Alignment.CenterVertically) {
+                    Text("Already have an Account?",fontSize=16.sp, fontFamily = regFont)
+                    TextButton(
                         onClick = { },
                         modifier = Modifier.padding(0.dp),
                         colors = ButtonDefaults.textButtonColors(contentColor = SeaGreen)
@@ -342,34 +453,203 @@ fun SignUp(navControl: NavHostController,appView: JollyView) {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@Preview(showSystemUi = true, showBackground = true)
 @Composable
-fun HomePage(navControl:NavHostController) {
-        Row(modifier = Modifier.fillMaxSize(),verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
-            Text("Page Coming Soon",fontSize = 32.sp, fontFamily = medFont,color = SeaGreen)
+fun HomePage() {
+    val scrollState = rememberScrollState()
+    //LaunchedEffect(Unit) { scrollState.animateScrollTo(100) }
+    Column(Modifier.padding(20.dp,20.dp), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            Row(Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("Hello Ally", fontSize = 20.sp, fontFamily = medFont,color = Brown)
+                Image(painter = painterResource(id = R.drawable.jollypic),contentDescription = "profile pic of user",modifier = Modifier
+                    .size(40.dp, 40.dp)
+                    .clip(CircleShape)
+                    .clickable { })
+            }
+            Row(Modifier.fillMaxWidth(),horizontalArrangement = Arrangement.Start) {
+                Text("Welcome Back", fontSize = 16.sp, fontFamily = regFont,color = Brown)
+            }
         }
-}
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Text("Featured", fontSize = 20.sp, fontFamily = medFont)
+            Icon(imageVector = Icons.Default.KeyboardArrowRight, contentDescription = "Right arrow Icon" )
+        }
+            Row(horizontalArrangement = Arrangement.spacedBy(16.dp), verticalAlignment = Alignment.CenterVertically,modifier = Modifier.horizontalScroll(scrollState)) {
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally){
+                    Image(painter = painterResource(id = R.drawable.jabiboatmall), contentDescription = "picture of jabi boat club",modifier = Modifier
+                        .size(170.dp, 230.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                    )
+                  Row(horizontalArrangement = Arrangement.Start){Text("Jabi Boat Club", fontSize = 20.sp, fontFamily = medFont)}
+                    Row(horizontalArrangement = Arrangement.Start){ Text("Boat Club",fontSize = 16.sp, fontFamily = regFont)}
+                    }
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp),horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(
+                        painter = painterResource(id = R.drawable.cilantro),
+                        contentDescription = "picture of cilantro restaurant",
+                        modifier = Modifier
+                            .size(170.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Cilantro",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Restaurant",
+                            fontSize = 16.sp,
+                            fontFamily = regFont
+                        )
+                    }
+                }
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp),horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(
+                        painter = painterResource(id = R.drawable.blucabara),
+                        contentDescription = "picture of Blucabara",
+                        modifier = Modifier
+                            .size(170.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "BluCabara",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text("Cafe and Restaurant", fontSize = 16.sp, fontFamily = regFont)
+                    }
+                }
+                Column(verticalArrangement = Arrangement.spacedBy(16.dp),horizontalAlignment = Alignment.CenterHorizontally){
+                    Image(painter = painterResource(id = R.drawable.housefortythree), contentDescription = "picture of house 43 restaurant",modifier = Modifier
+                        .size(170.dp, 230.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start){Text("House 43", fontSize = 20.sp, fontFamily = medFont)}
+                    Row(horizontalArrangement = Arrangement.Start){Text("Restaurant",fontSize = 16.sp, fontFamily = regFont)}
+                }
+        }
 
-@Composable
-fun MyHost(navControl: NavHostController,appView:JollyView) {
-    NavHost(navController = navControl, startDestination = "First_Onboard") {
-        composable("splashScreen") {
-            SplashScreen(navControl)
-        }
-        composable("First_Onboard") {
-            First_Onboard(navControl)
-        }
-        composable("Second_Onboard") {
-            Second_Onboard(navControl)
-        }
-        composable("Last_Onboard") {
-            Last_Onboard(navControl)
-        }
-        composable("Sign Up") {
-            SignUp(navControl,appView)
-        }
-        composable("Home Page") {
-            HomePage(navControl)
-        }
+        Scaffold(bottomBar = {
+            BottomAppBar(Modifier.fillMaxWidth(), containerColor = Color.Transparent) {
+                NavigationBarItem(
+                    selected = true,
+                    onClick = { /*navControl.navigate("Home Page") */ },
+                    icon = {
+                        Icon(
+                            painter = painterResource(
+                                id = R.drawable.home_icon
+                            ),
+                            contentDescription = "home icon",
+                            modifier = Modifier.size(24.dp, 24.dp)
+                        )
+                    },
+                    label = { Text("Home") },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = SeaGreen,
+                        selectedTextColor = SeaGreen,
+                        unselectedIconColor = Brown,
+                        unselectedTextColor = Brown
+                    )
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = {},
+                    icon = {
+                        Icon(
+                            painter = painterResource(
+                                id = R.drawable.search
+                            ),
+                            contentDescription = "Search Icon",
+                            modifier = Modifier.size(24.dp, 24.dp)
+                        )
+                    },
+                    label = { Text("Search") },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = SeaGreen,
+                        selectedTextColor = SeaGreen,
+                        unselectedIconColor = Brown,
+                        unselectedTextColor = Brown
+                    )
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { },
+                    icon = {
+                        Icon(
+                            painter = painterResource(
+                                id = R.drawable.map_pin
+                            ),
+                            contentDescription = "Navigation Icon",
+                            modifier = Modifier.size(24.dp, 24.dp)
+                        )
+                    },
+                    label = { Text("Navigation") },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = SeaGreen,
+                        selectedTextColor = SeaGreen,
+                        unselectedIconColor = Brown,
+                        unselectedTextColor = Brown
+                    )
+                )
+                NavigationBarItem(
+                    selected = false,
+                    onClick = { },
+                    icon = {
+                        Icon(
+                            painter = painterResource(
+                                id = R.drawable.user
+                            ),
+                            contentDescription = "User Profile icon",
+                            modifier = Modifier.size(24.dp, 24.dp)
+                        )
+                    },
+                    label = { Text("Profile") },
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = SeaGreen,
+                        selectedTextColor = SeaGreen,
+                        unselectedIconColor = Brown,
+                        unselectedTextColor = Brown
+                    )
+                )
+            }
+        }) { it }
 
     }
+
 }
+    @Composable
+    fun MyHost(navControl: NavHostController, appView: JollyView) {
+        NavHost(navController = navControl, startDestination = "First_Onboard") {
+            composable("splashScreen") {
+                SplashScreen(navControl)
+            }
+            composable("First_Onboard") {
+                First_Onboard(navControl)
+            }
+            composable("Second_Onboard") {
+                Second_Onboard(navControl)
+            }
+            composable("Last_Onboard") {
+                Last_Onboard(navControl)
+            }
+            composable("Sign Up") {
+                SignUp(navControl, appView)
+            }
+            composable("Log in") {
+                LogIn(navControl, appView)
+            }
+            composable("Home Page") {
+                HomePage()
+            }
+
+
+        }
+    }
