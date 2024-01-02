@@ -24,6 +24,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
@@ -1029,6 +1030,17 @@ fun HomePage() {
             }
         }) { it }*/
 
+}
+
+@Composable
+fun JabiBoatClub() {
+    Column(verticalArrangement = Arrangement.spacedBy(16.dp)){
+        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+            Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "left arrow icon")
+            Image(painter = painterResource(id = R.drawable.jabiboatmall), contentDescription = "picture of jabi boat club",modifier = Modifier.size(88.dp,318.dp) )
+            Text("Jabi Boat Club", fontSize = 20.sp, fontFamily = medFont)
+        }
+    }
 }
     @Composable
     fun MyHost(navControl: NavHostController, appView: JollyView) {
