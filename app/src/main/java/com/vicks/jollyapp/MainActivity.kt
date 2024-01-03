@@ -24,8 +24,12 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.BottomAppBarDefaults.containerColor
@@ -63,6 +67,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 
 import androidx.compose.ui.unit.dp
@@ -462,9 +467,8 @@ fun LogIn(navControl: NavHostController,appView: JollyView) {
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
-@Preview()
 @Composable
-fun HomePage() {
+fun HomePage(navControl: NavHostController) {
     val scrollState = rememberScrollState()
     val scrollStateT = rememberScrollState()
     val verticalState = rememberScrollState()
@@ -504,7 +508,7 @@ fun HomePage() {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.horizontalScroll(scrollState)
         ) {
-            Column(
+            Column(modifier =Modifier.clickable { navControl.navigate("Jabi Boat") },
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -1031,17 +1035,64 @@ fun HomePage() {
         }) { it }*/
 
 }
-
 @Composable
-fun JabiBoatClub() {
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)){
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
-            Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "left arrow icon")
-            Image(painter = painterResource(id = R.drawable.jabiboatmall), contentDescription = "picture of jabi boat club",modifier = Modifier.size(88.dp,318.dp) )
-            Text("Jabi Boat Club", fontSize = 20.sp, fontFamily = medFont)
+fun JabiBoatClub(navControl: NavHostController) {
+    Column(
+        Modifier
+            .padding(20.dp, 20.dp)
+            .verticalScroll(rememberScrollState()),verticalArrangement = Arrangement.spacedBy(32.dp)){
+        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+                Row {
+                    Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "left arrow icon",
+                        Modifier
+                            .size(32.dp, 32.dp)
+                            .clickable { navControl.popBackStack() })
+                    Text("J")
+                }
+
+            }
+
+            Image(painter = painterResource(id = R.drawable.boatclub), contentDescription = "picture of jabi boat club",modifier = Modifier.size(388.dp,318.dp) )
+            Row(Modifier.fillMaxWidth(),Arrangement.SpaceBetween,Alignment.CenterVertically) {
+                Text("Jabi Boat Club", fontSize = 24.sp, fontFamily = medFont)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of unfilled star",Modifier.size(24.dp,24.dp),tint = Color.Gray)
+                }
+            }
         }
+        Column(verticalArrangement = Arrangement.spacedBy(28.dp), horizontalAlignment = Alignment.CenterHorizontally ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Icon(imageVector = Icons.Default.LocationOn, contentDescription = "icon of location")
+                Text("26 Alex ekwueme way Nera hotel waterfront,Jabi", fontSize = 16.sp, fontFamily = regFont)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Icon(imageVector = Icons.Default.DateRange, contentDescription = "icon of calendar")
+                Text("Open 9:00am - 12:00am Mon-Sat\n" +
+                        "12:00pm - 12:00am Sundays", fontSize = 16.sp, fontFamily = regFont)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Icon(imageVector = Icons.Default.Phone, contentDescription = "icon of telephone")
+                Text("0902553833", fontSize = 16.sp, fontFamily = regFont)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Icon(painter = painterResource(id = R.drawable.navigation), contentDescription = "navigation Icon")
+                Text("Get Directions", fontSize = 16.sp, fontFamily = medFont, textDecoration = TextDecoration.Underline,color = SeaGreen)
+            }
+
+        }
+        Row(horizontalArrangement = Arrangement.Start, modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Text("About", fontSize = 20.sp, fontFamily = medFont, textDecoration = TextDecoration.Underline)
+        }
+        Text("Jabi Boat Club is a family entertainment centre designed to offer water based\n" +
+                "recreational facilities for the people of abuja and its environs as well as tourists.", fontSize = 16.sp, fontFamily = regFont)
     }
 }
+
     @Composable
     fun MyHost(navControl: NavHostController, appView: JollyView) {
         NavHost(navController = navControl, startDestination = "First_Onboard") {
@@ -1064,9 +1115,11 @@ fun JabiBoatClub() {
                 LogIn(navControl, appView)
             }
             composable("Home Page") {
-                HomePage()
+                HomePage(navControl)
             }
-
+            composable("Jabi Boat") {
+                JabiBoatClub(navControl)
+            }
 
         }
     }
