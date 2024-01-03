@@ -494,7 +494,7 @@ fun HomePage(navControl: NavHostController) {
                 Text("Welcome Back", fontSize = 16.sp, fontFamily = regFont, color = Brown)
             }
         }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+        Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
             Text("Featured", fontSize = 20.sp, fontFamily = medFont)
             Icon(
                 imageVector = Icons.Default.KeyboardArrowRight,
@@ -735,7 +735,7 @@ fun HomePage(navControl: NavHostController) {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.horizontalScroll(
                 rememberScrollState()
-            )
+            ).padding(horizontal = 20.dp)
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
