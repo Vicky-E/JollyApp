@@ -950,92 +950,6 @@ fun HomePage(navControl: NavHostController) {
             }
         }
     }
-
-       /* Scaffold(bottomBar = {
-            BottomAppBar(Modifier.fillMaxWidth(), containerColor = Color.Transparent) {
-                NavigationBarItem(
-                    selected = true,
-                    onClick = { /*navControl.navigate("Home Page") */ },
-                    icon = {
-                        Icon(
-                            painter = painterResource(
-                                id = R.drawable.home_icon
-                            ),
-                            contentDescription = "home icon",
-                            modifier = Modifier.size(24.dp, 24.dp)
-                        )
-                    },
-                    label = { Text("Home") },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = SeaGreen,
-                        selectedTextColor = SeaGreen,
-                        unselectedIconColor = Brown,
-                        unselectedTextColor = Brown
-                    )
-                )
-                NavigationBarItem(
-                    selected = false,
-                    onClick = {},
-                    icon = {
-                        Icon(
-                            painter = painterResource(
-                                id = R.drawable.search
-                            ),
-                            contentDescription = "Search Icon",
-                            modifier = Modifier.size(24.dp, 24.dp)
-                        )
-                    },
-                    label = { Text("Search") },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = SeaGreen,
-                        selectedTextColor = SeaGreen,
-                        unselectedIconColor = Brown,
-                        unselectedTextColor = Brown
-                    )
-                )
-                NavigationBarItem(
-                    selected = false,
-                    onClick = { },
-                    icon = {
-                        Icon(
-                            painter = painterResource(
-                                id = R.drawable.map_pin
-                            ),
-                            contentDescription = "Navigation Icon",
-                            modifier = Modifier.size(24.dp, 24.dp)
-                        )
-                    },
-                    label = { Text("Navigation") },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = SeaGreen,
-                        selectedTextColor = SeaGreen,
-                        unselectedIconColor = Brown,
-                        unselectedTextColor = Brown
-                    )
-                )
-                NavigationBarItem(
-                    selected = false,
-                    onClick = { },
-                    icon = {
-                        Icon(
-                            painter = painterResource(
-                                id = R.drawable.user
-                            ),
-                            contentDescription = "User Profile icon",
-                            modifier = Modifier.size(24.dp, 24.dp)
-                        )
-                    },
-                    label = { Text("Profile") },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = SeaGreen,
-                        selectedTextColor = SeaGreen,
-                        unselectedIconColor = Brown,
-                        unselectedTextColor = Brown
-                    )
-                )
-            }
-        }) { it }*/
-
 }
 @Composable
 fun JabiBoatClub(navControl: NavHostController) {
@@ -1249,6 +1163,94 @@ fun Blucabana(navControl: NavHostController) {
         Text("Located in the heart of Abuja, Blucabana is a chill, calm spot away from all the noise in town. Through this, Blucabana restaurant is pleased to send warm greetings and be presented to you.", fontSize = 16.sp, fontFamily = regFont)
     }
 
+}
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Navbar() {
+    Scaffold(bottomBar = {
+        BottomAppBar(Modifier.fillMaxWidth(), containerColor = Color.Transparent) {
+            NavigationBarItem(
+                selected = true,
+                onClick = { /*navControl.navigate("Home Page") */ },
+                icon = {
+                    Icon(
+                        painter = painterResource(
+                            id = R.drawable.home_icon
+                        ),
+                        contentDescription = "home icon",
+                        modifier = Modifier.size(24.dp, 24.dp)
+                    )
+                },
+                label = { Text("Home") },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = SeaGreen,
+                    selectedTextColor = SeaGreen,
+                    unselectedIconColor = Brown,
+                    unselectedTextColor = Brown
+                )
+            )
+            NavigationBarItem(
+                selected = false,
+                onClick = {},
+                icon = {
+                    Icon(
+                        painter = painterResource(
+                            id = R.drawable.search
+                        ),
+                        contentDescription = "Search Icon",
+                        modifier = Modifier.size(24.dp, 24.dp)
+                    )
+                },
+                label = { Text("Search") },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = SeaGreen,
+                    selectedTextColor = SeaGreen,
+                    unselectedIconColor = Brown,
+                    unselectedTextColor = Brown
+                )
+            )
+            NavigationBarItem(
+                selected = false,
+                onClick = { },
+                icon = {
+                    Icon(
+                        painter = painterResource(
+                            id = R.drawable.map_pin
+                        ),
+                        contentDescription = "Navigation Icon",
+                        modifier = Modifier.size(24.dp, 24.dp)
+                    )
+                },
+                label = { Text("Navigation") },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = SeaGreen,
+                    selectedTextColor = SeaGreen,
+                    unselectedIconColor = Brown,
+                    unselectedTextColor = Brown
+                )
+            )
+            NavigationBarItem(
+                selected = false,
+                onClick = { },
+                icon = {
+                    Icon(
+                        painter = painterResource(
+                            id = R.drawable.user
+                        ),
+                        contentDescription = "User Profile icon",
+                        modifier = Modifier.size(24.dp, 24.dp)
+                    )
+                },
+                label = { Text("Profile") },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = SeaGreen,
+                    selectedTextColor = SeaGreen,
+                    unselectedIconColor = Brown,
+                    unselectedTextColor = Brown
+                )
+            )
+        }
+    }){it}
 }
     @Composable
     fun MyHost(navControl: NavHostController, appView: JollyView) {
