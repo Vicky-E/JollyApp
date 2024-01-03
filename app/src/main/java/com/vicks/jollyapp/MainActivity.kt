@@ -287,8 +287,7 @@ fun SignUp(navControl: NavHostController,appView: JollyView) {
                 label = { Text("Email") },
                 placeholder = { Text("Enter your email") },
                 colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown),
-                modifier = Modifier
-                    .size(388.dp, 60.dp),
+                modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
                 trailingIcon = {Icon(painterResource(id = R.drawable.baseline_cancel_24),"icon of cancel ",Modifier.size(20.dp,20.dp),tint=grey)}
                 )
@@ -297,9 +296,8 @@ fun SignUp(navControl: NavHostController,appView: JollyView) {
                 onValueChange = {appView.JData.password.value = it },
                 label = { Text("Password") },
                 colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown),
+                modifier = Modifier.fillMaxWidth(),
                 placeholder = { Text("Enter a password") },
-                modifier = Modifier
-                    .size(388.dp, 60.dp),
                 visualTransformation = if(hide) VisualTransformation.None else PasswordVisualTransformation(),
                 shape = RoundedCornerShape(8.dp),
                 trailingIcon = {IconButton(onClick = {hide = !hide },
@@ -313,7 +311,7 @@ fun SignUp(navControl: NavHostController,appView: JollyView) {
                 colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown),
                 visualTransformation = if(chide) VisualTransformation.None else PasswordVisualTransformation(),
                 modifier = Modifier
-                    .size(388.dp, 60.dp),
+                    .fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
                 trailingIcon = {IconButton(onClick = {chide = !chide  },
                     content = {Icon(painter = painterResource(id = if (chide) R.drawable.baseline_remove_red_eye_24 else R.drawable.eyec), contentDescription = "eye icon",modifier=Modifier.size(20.dp,20.dp),tint= grey)})}
@@ -391,7 +389,7 @@ fun LogIn(navControl: NavHostController,appView: JollyView) {
                 placeholder = { Text("Enter your email") },
                 colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown),
                 modifier = Modifier
-                    .size(388.dp, 60.dp),
+                    .fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
                 trailingIcon = {Icon(painterResource(id = R.drawable.baseline_cancel_24),"icon of cancel ",Modifier.size(20.dp,20.dp),tint=grey)}
             )
@@ -402,7 +400,7 @@ fun LogIn(navControl: NavHostController,appView: JollyView) {
                 colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown),
                 placeholder = { Text("Enter a password") },
                 modifier = Modifier
-                    .size(388.dp, 60.dp),
+                    .fillMaxWidth(),
                 visualTransformation = if(visible) VisualTransformation.None else PasswordVisualTransformation(),
                 shape = RoundedCornerShape(8.dp),
                 trailingIcon = {IconButton(onClick = {visible= !visible },
@@ -448,13 +446,13 @@ fun LogIn(navControl: NavHostController,appView: JollyView) {
                 }
                 Row(horizontalArrangement = Arrangement.spacedBy(2.dp),
                     verticalAlignment = Alignment.CenterVertically) {
-                    Text("Already have an Account?",fontSize=16.sp, fontFamily = regFont)
+                    Text("Don't have an Account?",fontSize=16.sp, fontFamily = regFont)
                     TextButton(
-                        onClick = { },
+                        onClick = {navControl.navigate("Sign Up") },
                         modifier = Modifier.padding(0.dp),
                         colors = ButtonDefaults.textButtonColors(contentColor = SeaGreen)
                     ) {
-                        Text("Sign In", fontSize = 16.sp, fontFamily = medFont)
+                        Text("Sign Up", fontSize = 16.sp, fontFamily = medFont)
 
                     }
                 }
@@ -536,7 +534,8 @@ fun HomePage(navControl: NavHostController) {
             }
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.clickable { navControl.navigate("cilantro") }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.cilantro),
@@ -562,18 +561,19 @@ fun HomePage(navControl: NavHostController) {
             }
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.clickable { navControl.navigate("blucabana") }
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.blucabara),
-                    contentDescription = "picture of Blucabara",
+                    contentDescription = "picture of Blucabana",
                     modifier = Modifier
                         .size(148.dp, 230.dp)
                         .clip(RoundedCornerShape(8.dp))
                 )
                 Row(horizontalArrangement = Arrangement.Start) {
                     Text(
-                        "BluCabara",
+                        "BluCabana",
                         fontSize = 20.sp,
                         fontFamily = medFont
                     )
@@ -739,7 +739,8 @@ fun HomePage(navControl: NavHostController) {
         ) {
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.clickable { navControl.navigate("cilantro")}
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.cilantro),
@@ -1054,7 +1055,7 @@ fun JabiBoatClub(navControl: NavHostController) {
             Image(painter = painterResource(id = R.drawable.boatclub), contentDescription = "picture of jabi boat club",modifier = Modifier.size(388.dp,318.dp) )
             Row(Modifier.fillMaxWidth(),Arrangement.SpaceBetween,Alignment.CenterVertically) {
                 Text("Jabi Boat Club", fontSize = 24.sp, fontFamily = medFont)
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
                     Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
                     Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
@@ -1108,7 +1109,7 @@ fun CafeDeVie(navControl: NavHostController) {
             Image(painter = painterResource(id = R.drawable.devie), contentDescription = "picture of jabi boat club",modifier = Modifier.size(388.dp,318.dp) )
             Row(Modifier.fillMaxWidth(),Arrangement.SpaceBetween,Alignment.CenterVertically) {
                 Text("Cafe De Vie", fontSize = 24.sp, fontFamily = medFont)
-                Row(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalAlignment = Alignment.CenterVertically) {
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
                     Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
                     Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
                     Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
@@ -1139,11 +1140,116 @@ fun CafeDeVie(navControl: NavHostController) {
         Row(horizontalArrangement = Arrangement.Start, modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text("About", fontSize = 20.sp, fontFamily = medFont, textDecoration = TextDecoration.Underline)
         }
-        Text("Cafe De Vie offers Top notch Service and high\n" +
-                "quality food with a vegetarian and vegan friendly menu.", fontSize = 16.sp, fontFamily = regFont)
+        Text("Cafe De Vie offers Top notch Service and\n" +
+                "high quality food with a vegetarian and vegan friendly menu.", fontSize = 16.sp, fontFamily = regFont)
     }
 }
 
+@Composable
+fun Cilantro(navControl: NavHostController) {
+    Column(
+        Modifier
+            .padding(20.dp, 20.dp)
+            .verticalScroll(rememberScrollState()),verticalArrangement = Arrangement.spacedBy(28.dp)){
+        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+                Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "left arrow icon",
+                    Modifier
+                        .size(32.dp, 32.dp)
+                        .clickable { navControl.popBackStack() })
+
+            }
+
+            Image(painter = painterResource(id = R.drawable.cilantr), contentDescription = "picture of jabi boat club",modifier = Modifier.size(388.dp,318.dp) )
+            Row(Modifier.fillMaxWidth(),Arrangement.SpaceBetween,Alignment.CenterVertically) {
+                Text("Cilantro", fontSize = 24.sp, fontFamily = medFont)
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
+                }
+            }
+        }
+        Column(verticalArrangement = Arrangement.spacedBy(28.dp), horizontalAlignment = Alignment.CenterHorizontally ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Icon(imageVector = Icons.Default.LocationOn, contentDescription = "icon of location")
+                Text("Plot 3704 ibrahim babangida way sarius palmetum,Abuja", fontSize = 16.sp, fontFamily = regFont)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Icon(imageVector = Icons.Default.DateRange, contentDescription = "icon of calendar")
+                Text("Open 11:00am - 11:00pm Daily", fontSize = 16.sp, fontFamily = regFont)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Icon(imageVector = Icons.Default.Phone, contentDescription = "icon of telephone")
+                Text("08182345670", fontSize = 16.sp, fontFamily = regFont)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Icon(painter = painterResource(id = R.drawable.navigation), contentDescription = "navigation Icon")
+                Text("Get Directions", fontSize = 16.sp, fontFamily = medFont, textDecoration = TextDecoration.Underline,color = SeaGreen)
+            }
+
+        }
+        Row(horizontalArrangement = Arrangement.Start, modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Text("About", fontSize = 20.sp, fontFamily = medFont, textDecoration = TextDecoration.Underline)
+        }
+        Text("Cilantro  restaurant serves great indian contemporary, and asian cuisines,they  also offer vegetable friendly,vegan and gluten free menus", fontSize = 16.sp, fontFamily = regFont)
+    }
+}
+@Composable
+fun Blucabana(navControl: NavHostController) {
+    Column(
+        Modifier
+            .padding(20.dp, 20.dp)
+            .verticalScroll(rememberScrollState()),verticalArrangement = Arrangement.spacedBy(28.dp)){
+        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start, verticalAlignment = Alignment.CenterVertically) {
+                Icon(imageVector = Icons.Default.KeyboardArrowLeft, contentDescription = "left arrow icon",
+                    Modifier
+                        .size(32.dp, 32.dp)
+                        .clickable { navControl.popBackStack() })
+
+            }
+
+            Image(painter = painterResource(id = R.drawable.bluecabna), contentDescription = "picture of jabi boat club",modifier = Modifier.size(388.dp,318.dp) )
+            Row(Modifier.fillMaxWidth(),Arrangement.SpaceBetween,Alignment.CenterVertically) {
+                Text("BluCabana", fontSize = 24.sp, fontFamily = medFont)
+                Row(horizontalArrangement = Arrangement.spacedBy(4.dp), verticalAlignment = Alignment.CenterVertically) {
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Yellow)
+                    Icon(imageVector = Icons.Default.Star, contentDescription = "Icon of filled star",Modifier.size(24.dp,24.dp),tint = Color.Gray)
+                }
+            }
+        }
+        Column(verticalArrangement = Arrangement.spacedBy(28.dp), horizontalAlignment = Alignment.CenterHorizontally ) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Icon(imageVector = Icons.Default.LocationOn, contentDescription = "icon of location")
+                Text("322 Shehu Yar’adua Way Mabushi, Abuja,", fontSize = 16.sp, fontFamily = regFont)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Icon(imageVector = Icons.Default.DateRange, contentDescription = "icon of calendar")
+                Text("Open Mon-Thurs 9:00am-10:30pm\n Fri-Sun 9:00am-10:00pm", fontSize = 16.sp, fontFamily = regFont)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Icon(imageVector = Icons.Default.Phone, contentDescription = "icon of telephone")
+                Text("08100900000", fontSize = 16.sp, fontFamily = regFont)
+            }
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
+                Icon(painter = painterResource(id = R.drawable.navigation), contentDescription = "navigation Icon")
+                Text("Get Directions", fontSize = 16.sp, fontFamily = medFont, textDecoration = TextDecoration.Underline,color = SeaGreen)
+            }
+
+        }
+        Row(horizontalArrangement = Arrangement.Start, modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Text("About", fontSize = 20.sp, fontFamily = medFont, textDecoration = TextDecoration.Underline)
+        }
+        Text("Located in the heart of Abuja, Blucabana is a chill, calm spot away from all the noise in town. Through this, Blucabana restaurant is pleased to send warm greetings and be presented to you.", fontSize = 16.sp, fontFamily = regFont)
+    }
+
+}
     @Composable
     fun MyHost(navControl: NavHostController, appView: JollyView) {
         NavHost(navController = navControl, startDestination = "First_Onboard") {
@@ -1173,6 +1279,12 @@ fun CafeDeVie(navControl: NavHostController) {
             }
             composable("cafe") {
                 CafeDeVie(navControl)
+            }
+            composable("cilantro") {
+                Cilantro(navControl)
+            }
+            composable("blucabana") {
+                Blucabana(navControl)
             }
 
         }
