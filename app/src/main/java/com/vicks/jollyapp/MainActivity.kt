@@ -323,7 +323,7 @@ fun SignUp(navControl: NavHostController,appView: JollyView) {
                 Text(text = appView.JData.error.value,color = Color.Red,fontSize = 16.sp,fontFamily = regFont)
             Column(verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally,modifier=Modifier.padding(top = 20.dp)) {
                 Button(onClick = {valCheck = appView.validate()
-                                 if (valCheck) navControl.navigate("Home Page")},modifier= Modifier
+                                 if (valCheck) navControl.navigate("navbar")},modifier= Modifier
                     .size(388.dp, 50.dp),
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = SeaGreen, contentColor = White26)) {
@@ -417,7 +417,7 @@ fun LogIn(navControl: NavHostController,appView: JollyView) {
             Text(text = appView.JData.error.value,color = Color.Red,fontSize = 16.sp,fontFamily = regFont)
             Column(verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally,modifier=Modifier.padding(top = 20.dp)) {
                 Button(onClick = {checkVal = appView.loginValidate()
-                    if (checkVal) navControl.navigate("Home Page")},modifier= Modifier
+                    if (checkVal) navControl.navigate("navbar")},modifier= Modifier
                     .size(388.dp, 50.dp),
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = SeaGreen, contentColor = White26)) {
@@ -1166,9 +1166,9 @@ fun Blucabana(navControl: NavHostController) {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Navbar() {
-    Scaffold(bottomBar = {
-        BottomAppBar(Modifier.fillMaxWidth(), containerColor = Color.Transparent) {
+fun Navbar(navControl: NavHostController) {
+    Scaffold(containerColor = White26, bottomBar = {
+        BottomAppBar(Modifier.fillMaxWidth(), containerColor = White26) {
             NavigationBarItem(
                 selected = true,
                 onClick = { /*navControl.navigate("Home Page") */ },
@@ -1250,7 +1250,487 @@ fun Navbar() {
                 )
             )
         }
-    }){it}
+    }){innerPadding -> Column(
+        Modifier
+            .padding(innerPadding).fillMaxSize()
+            .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+        val scrollState = rememberScrollState()
+        val scrollStateT = rememberScrollState()
+        val verticalState = rememberScrollState()
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text("Hello Ally", fontSize = 20.sp, fontFamily = medFont, color = Brown)
+                    Image(painter = painterResource(id = R.drawable.jollypic),
+                        contentDescription = "profile pic of user",
+                        modifier = Modifier
+                            .size(40.dp, 40.dp)
+                            .clip(CircleShape)
+                            .clickable { })
+                }
+                Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
+                    Text("Welcome Back", fontSize = 16.sp, fontFamily = regFont, color = Brown)
+                }
+            }
+            Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("Featured", fontSize = 20.sp, fontFamily = medFont)
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = "Right arrow Icon"
+                )
+            }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.horizontalScroll(scrollState).padding(20.dp)
+            ) {
+                Column(modifier =Modifier.clickable { navControl.navigate("Jabi Boat") },
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.jabiboatmall),
+                        contentDescription = "picture of jabi boat club",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Jabi Boat Club",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Boat Club",
+                            fontSize = 16.sp,
+                            fontFamily = regFont
+                        )
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.clickable { navControl.navigate("cilantro") }
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.cilantro),
+                        contentDescription = "picture of cilantro restaurant",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Cilantro",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Restaurant",
+                            fontSize = 16.sp,
+                            fontFamily = regFont
+                        )
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.clickable { navControl.navigate("blucabana") }
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.blucabara),
+                        contentDescription = "picture of Blucabana",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "BluCabana",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text("Cafe and Restaurant", fontSize = 16.sp, fontFamily = regFont)
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.housefortythree),
+                        contentDescription = "picture of house 43 restaurant",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "House 43",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Restaurant",
+                            fontSize = 16.sp,
+                            fontFamily = regFont
+                        )
+                    }
+                }
+            }
+            Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("Trending", fontSize = 20.sp, fontFamily = medFont)
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = "Right arrow Icon"
+                )
+            }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.horizontalScroll(scrollStateT).padding(horizontal = 20.dp)
+            ) {
+                Column(
+                    modifier = Modifier.clickable { navControl.navigate("cafe") },
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.cafedevie),
+                        contentDescription = "picture of Cafe De Vie",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Cafe De Vie",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Restaurant",
+                            fontSize = 16.sp,
+                            fontFamily = regFont
+                        )
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.nikeart),
+                        contentDescription = "picture of nike art gallery",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Nike Art",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Arts and Culture",
+                            fontSize = 16.sp,
+                            fontFamily = regFont
+                        )
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.beautyaddicts),
+                        contentDescription = "picture of Beauty Addict spa",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Beauty Addicts",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text("Spa", fontSize = 16.sp, fontFamily = regFont)
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.housefortythree),
+                        contentDescription = "picture of house 43 restaurant",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "House 43",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Restaurant",
+                            fontSize = 16.sp,
+                            fontFamily = regFont
+                        )
+                    }
+                }
+            }
+            Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("Recommended", fontSize = 20.sp, fontFamily = medFont)
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = "Right arrow Icon"
+                )
+            }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.horizontalScroll(
+                    rememberScrollState()
+                ).padding(horizontal = 20.dp)
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.clickable { navControl.navigate("cilantro")}
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.cilantro),
+                        contentDescription = "picture of Cilantro restaurant",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Cilantro",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Restaurant",
+                            fontSize = 16.sp,
+                            fontFamily = regFont
+                        )
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.beautyaddicts),
+                        contentDescription = "picture of Beauty Addicts spa",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Beauty Addicts",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Spa",
+                            fontSize = 16.sp,
+                            fontFamily = regFont
+                        )
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.crush),
+                        contentDescription = "picture of crush cafe Restaurant",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Crush Cafe",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text("Restaurant", fontSize = 16.sp, fontFamily = regFont)
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.tpyra),
+                        contentDescription = "picture of thought pyramid art centre",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Thought Pyramid",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Arts and Culture",
+                            fontSize = 16.sp,
+                            fontFamily = regFont
+                        )
+                    }
+                }
+            }
+            Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+                Text("Categories", fontSize = 20.sp, fontFamily = medFont)
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowRight,
+                    contentDescription = "Right arrow Icon"
+                )
+            }
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.horizontalScroll(
+                    rememberScrollState()
+                ).padding(horizontal = 20.dp)
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.nikeart),
+                        contentDescription = "picture of arts center",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Arts and Culture",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.finedining),
+                        contentDescription = "picture of restaurant",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Fine Dining",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.spasandwellness),
+                        contentDescription = "picture of spa",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Spa and wellness",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.naturepa),
+                        contentDescription = "picture of recreational park",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Nature Parks",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.splash),
+                        contentDescription = "picture of water park",
+                        modifier = Modifier
+                            .size(148.dp, 230.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                    )
+                    Row(horizontalArrangement = Arrangement.Start) {
+                        Text(
+                            "Water Parks",
+                            fontSize = 20.sp,
+                            fontFamily = medFont
+                        )
+                    }
+                }
+            }
+        } }
 }
     @Composable
     fun MyHost(navControl: NavHostController, appView: JollyView) {
@@ -1275,6 +1755,9 @@ fun Navbar() {
             }
             composable("Home Page") {
                 HomePage(navControl)
+            }
+            composable("navbar") {
+                Navbar(navControl)
             }
             composable("Jabi Boat") {
                 JabiBoatClub(navControl)
