@@ -9,7 +9,7 @@ data class JollyData(
     var error : MutableState<String> = mutableStateOf(""),
     var tick: MutableState<Boolean> = mutableStateOf(false),
     var cpassword:MutableState<String> = mutableStateOf(""),
-    var invisible: MutableState<Boolean> = mutableStateOf(false)
-
+    var invisible: MutableState<Boolean> = mutableStateOf(false),
+    var searchTerm:MutableState<String> = mutableStateOf("")
 
 )

@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.BottomAppBarDefaults
@@ -47,6 +48,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -75,6 +77,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.AndroidViewModel
 import androidx.navigation.NavHost
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -323,7 +326,7 @@ fun SignUp(navControl: NavHostController,appView: JollyView) {
                 Text(text = appView.JData.error.value,color = Color.Red,fontSize = 16.sp,fontFamily = regFont)
             Column(verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally,modifier=Modifier.padding(top = 20.dp)) {
                 Button(onClick = {valCheck = appView.validate()
-                                 if (valCheck) navControl.navigate("navbar")},modifier= Modifier
+                                 if (valCheck) navControl.navigate("home page"){popUpTo("Log In"){inclusive = false}}},modifier= Modifier
                     .size(388.dp, 50.dp),
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = SeaGreen, contentColor = White26)) {
@@ -354,7 +357,7 @@ fun SignUp(navControl: NavHostController,appView: JollyView) {
                     verticalAlignment = Alignment.CenterVertically) {
                     Text("Already have an Account?",fontSize=16.sp, fontFamily = regFont)
                     TextButton(
-                        onClick = {navControl.navigate("Log in")},
+                        onClick = {navControl.navigate("Log in"){popUpTo("Log In"){inclusive = true}}},
                         modifier = Modifier.padding(0.dp),
                         colors = ButtonDefaults.textButtonColors(contentColor = SeaGreen)
                     ) {
@@ -417,7 +420,7 @@ fun LogIn(navControl: NavHostController,appView: JollyView) {
             Text(text = appView.JData.error.value,color = Color.Red,fontSize = 16.sp,fontFamily = regFont)
             Column(verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally,modifier=Modifier.padding(top = 20.dp)) {
                 Button(onClick = {checkVal = appView.loginValidate()
-                    if (checkVal) navControl.navigate("navbar")},modifier= Modifier
+                    if (checkVal) navControl.navigate("home page"){popUpTo("Log In"){inclusive = false}}},modifier= Modifier
                     .size(388.dp, 50.dp),
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = SeaGreen, contentColor = White26)) {
@@ -448,7 +451,7 @@ fun LogIn(navControl: NavHostController,appView: JollyView) {
                     verticalAlignment = Alignment.CenterVertically) {
                     Text("Don't have an Account?",fontSize=16.sp, fontFamily = regFont)
                     TextButton(
-                        onClick = {navControl.navigate("Sign Up") },
+                        onClick = {navControl.navigate("Sign Up")},
                         modifier = Modifier.padding(0.dp),
                         colors = ButtonDefaults.textButtonColors(contentColor = SeaGreen)
                     ) {
@@ -465,492 +468,6 @@ fun LogIn(navControl: NavHostController,appView: JollyView) {
 }
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
-@Composable
-fun HomePage(navControl: NavHostController) {
-    val scrollState = rememberScrollState()
-    val scrollStateT = rememberScrollState()
-    val verticalState = rememberScrollState()
-
-    //LaunchedEffect(Unit) { scrollState.animateScrollTo(100) }
-    Column(
-        Modifier
-            .fillMaxSize()
-            .padding(20.dp, 20.dp)
-            .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                Text("Hello Ally", fontSize = 20.sp, fontFamily = medFont, color = Brown)
-                Image(painter = painterResource(id = R.drawable.jollypic),
-                    contentDescription = "profile pic of user",
-                    modifier = Modifier
-                        .size(40.dp, 40.dp)
-                        .clip(RoundedCornerShape(20.dp))
-                        .clickable { })
-            }
-            Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-                Text("Welcome Back", fontSize = 16.sp, fontFamily = regFont, color = Brown)
-            }
-        }
-        Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("Featured", fontSize = 20.sp, fontFamily = medFont)
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowRight,
-                contentDescription = "Right arrow Icon"
-            )
-        }
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.horizontalScroll(scrollState)
-        ) {
-            Column(modifier =Modifier.clickable { navControl.navigate("Jabi Boat") },
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.jabiboatmall),
-                    contentDescription = "picture of jabi boat club",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Jabi Boat Club",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Boat Club",
-                        fontSize = 16.sp,
-                        fontFamily = regFont
-                    )
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.clickable { navControl.navigate("cilantro") }
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.cilantro),
-                    contentDescription = "picture of cilantro restaurant",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Cilantro",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Restaurant",
-                        fontSize = 16.sp,
-                        fontFamily = regFont
-                    )
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.clickable { navControl.navigate("blucabana") }
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.blucabara),
-                    contentDescription = "picture of Blucabana",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "BluCabana",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text("Cafe and Restaurant", fontSize = 16.sp, fontFamily = regFont)
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.housefortythree),
-                    contentDescription = "picture of house 43 restaurant",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "House 43",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Restaurant",
-                        fontSize = 16.sp,
-                        fontFamily = regFont
-                    )
-                }
-            }
-        }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("Trending", fontSize = 20.sp, fontFamily = medFont)
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowRight,
-                contentDescription = "Right arrow Icon"
-            )
-        }
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.horizontalScroll(scrollStateT)
-        ) {
-            Column(
-                modifier = Modifier.clickable { navControl.navigate("cafe") },
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.cafedevie),
-                    contentDescription = "picture of Cafe De Vie",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Cafe De Vie",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Restaurant",
-                        fontSize = 16.sp,
-                        fontFamily = regFont
-                    )
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.nikeart),
-                    contentDescription = "picture of nike art gallery",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Nike Art",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Arts and Culture",
-                        fontSize = 16.sp,
-                        fontFamily = regFont
-                    )
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.beautyaddicts),
-                    contentDescription = "picture of Beauty Addict spa",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Beauty Addicts",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text("Spa", fontSize = 16.sp, fontFamily = regFont)
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.housefortythree),
-                    contentDescription = "picture of house 43 restaurant",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "House 43",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Restaurant",
-                        fontSize = 16.sp,
-                        fontFamily = regFont
-                    )
-                }
-            }
-        }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("Recommended", fontSize = 20.sp, fontFamily = medFont)
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowRight,
-                contentDescription = "Right arrow Icon"
-            )
-        }
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.horizontalScroll(
-                rememberScrollState()
-            ).padding(horizontal = 20.dp)
-        ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.clickable { navControl.navigate("cilantro")}
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.cilantro),
-                    contentDescription = "picture of Cilantro restaurant",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Cilantro",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Restaurant",
-                        fontSize = 16.sp,
-                        fontFamily = regFont
-                    )
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.beautyaddicts),
-                    contentDescription = "picture of Beauty Addicts spa",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Beauty Addicts",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Spa",
-                        fontSize = 16.sp,
-                        fontFamily = regFont
-                    )
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.crush),
-                    contentDescription = "picture of crush cafe Restaurant",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Crush Cafe",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text("Restaurant", fontSize = 16.sp, fontFamily = regFont)
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.tpyra),
-                    contentDescription = "picture of thought pyramid art centre",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Thought Pyramid",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Arts and Culture",
-                        fontSize = 16.sp,
-                        fontFamily = regFont
-                    )
-                }
-            }
-        }
-        Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Text("Categories", fontSize = 20.sp, fontFamily = medFont)
-            Icon(
-                imageVector = Icons.Default.KeyboardArrowRight,
-                contentDescription = "Right arrow Icon"
-            )
-        }
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.horizontalScroll(
-                rememberScrollState()
-            )
-        ) {
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.nikeart),
-                    contentDescription = "picture of arts center",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Arts and Culture",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.finedining),
-                    contentDescription = "picture of restaurant",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Fine Dining",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.spasandwellness),
-                    contentDescription = "picture of spa",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Spa and wellness",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.naturepa),
-                    contentDescription = "picture of recreational park",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Nature Parks",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.splash),
-                    contentDescription = "picture of water park",
-                    modifier = Modifier
-                        .size(148.dp, 230.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                )
-                Row(horizontalArrangement = Arrangement.Start) {
-                    Text(
-                        "Water Parks",
-                        fontSize = 20.sp,
-                        fontFamily = medFont
-                    )
-                }
-            }
-        }
-    }
-}
 @Composable
 fun JabiBoatClub(navControl: NavHostController) {
     Column(
@@ -1166,7 +683,7 @@ fun Blucabana(navControl: NavHostController) {
 }
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Navbar(navControl: NavHostController) {
+fun HomePage(navControl: NavHostController) {
     val scrollState = rememberScrollState()
     val scrollStateT = rememberScrollState()
     val verticalState = rememberScrollState()
@@ -1174,7 +691,7 @@ fun Navbar(navControl: NavHostController) {
         BottomAppBar(Modifier.fillMaxWidth(), containerColor = White26) {
             NavigationBarItem(
                 selected = true,
-                onClick = { /*navControl.navigate("Home Page") */ },
+                onClick = { navControl.navigate("home page"){popUpTo("Log In"){inclusive = false}}},
                 icon = {
                     Icon(
                         painter = painterResource(
@@ -1184,7 +701,7 @@ fun Navbar(navControl: NavHostController) {
                         modifier = Modifier.size(24.dp, 24.dp)
                     )
                 },
-                label = { Text("Home") },
+                label = { Text("Home", fontFamily = regFont, fontSize = 14.sp) },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = SeaGreen,
                     selectedTextColor = SeaGreen,
@@ -1194,7 +711,7 @@ fun Navbar(navControl: NavHostController) {
             )
             NavigationBarItem(
                 selected = false,
-                onClick = {},
+                onClick = {navControl.navigate("search bar")},
                 icon = {
                     Icon(
                         painter = painterResource(
@@ -1204,7 +721,7 @@ fun Navbar(navControl: NavHostController) {
                         modifier = Modifier.size(24.dp, 24.dp)
                     )
                 },
-                label = { Text("Search") },
+                label = { Text("Search", fontFamily = regFont, fontSize = 14.sp) },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = SeaGreen,
                     selectedTextColor = SeaGreen,
@@ -1224,7 +741,7 @@ fun Navbar(navControl: NavHostController) {
                         modifier = Modifier.size(24.dp, 24.dp)
                     )
                 },
-                label = { Text("Navigation") },
+                label = { Text("Navigation", fontFamily = regFont, fontSize = 14.sp) },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = SeaGreen,
                     selectedTextColor = SeaGreen,
@@ -1244,7 +761,7 @@ fun Navbar(navControl: NavHostController) {
                         modifier = Modifier.size(24.dp, 24.dp)
                     )
                 },
-                label = { Text("Profile") },
+                label = { Text("Profile", fontFamily = regFont, fontSize = 14.sp) },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = SeaGreen,
                     selectedTextColor = SeaGreen,
@@ -1255,15 +772,18 @@ fun Navbar(navControl: NavHostController) {
         }
     }){innerPadding -> Column(
         Modifier
-            .padding(innerPadding).fillMaxSize()
+            .padding(innerPadding)
+            .fillMaxSize()
             .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
             Column(
-                modifier = Modifier.padding(horizontal = 20.dp),
+                modifier = Modifier.padding(20.dp,20.dp,20.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Row(Modifier.fillMaxWidth().padding(20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text("Hello Ally", fontSize = 20.sp, fontFamily = medFont, color = Brown)
+                Row(
+                    Modifier
+                        .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text("Hello Ally", fontSize = 20.sp, fontFamily = medFont)
                     Image(painter = painterResource(id = R.drawable.jollypic),
                         contentDescription = "profile pic of user",
                         modifier = Modifier
@@ -1275,7 +795,10 @@ fun Navbar(navControl: NavHostController) {
                     Text("Welcome Back", fontSize = 16.sp, fontFamily = regFont, color = Brown)
                 }
             }
-            Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text("Featured", fontSize = 20.sp, fontFamily = medFont)
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowRight,
@@ -1285,7 +808,9 @@ fun Navbar(navControl: NavHostController) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.horizontalScroll(scrollState).padding(20.dp)
+                modifier = Modifier
+                    .horizontalScroll(scrollState)
+                    .padding(20.dp)
             ) {
                 Column(modifier =Modifier.clickable { navControl.navigate("Jabi Boat") },
                     verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -1390,7 +915,10 @@ fun Navbar(navControl: NavHostController) {
                     }
                 }
             }
-            Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text("Trending", fontSize = 20.sp, fontFamily = medFont)
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowRight,
@@ -1400,7 +928,9 @@ fun Navbar(navControl: NavHostController) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.horizontalScroll(scrollStateT).padding(horizontal = 20.dp)
+                modifier = Modifier
+                    .horizontalScroll(scrollStateT)
+                    .padding(horizontal = 20.dp)
             ) {
                 Column(
                     modifier = Modifier.clickable { navControl.navigate("cafe") },
@@ -1504,7 +1034,10 @@ fun Navbar(navControl: NavHostController) {
                     }
                 }
             }
-            Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text("Recommended", fontSize = 20.sp, fontFamily = medFont)
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowRight,
@@ -1514,9 +1047,11 @@ fun Navbar(navControl: NavHostController) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.horizontalScroll(
-                    rememberScrollState()
-                ).padding(horizontal = 20.dp)
+                modifier = Modifier
+                    .horizontalScroll(
+                        rememberScrollState()
+                    )
+                    .padding(horizontal = 20.dp)
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -1620,7 +1155,10 @@ fun Navbar(navControl: NavHostController) {
                     }
                 }
             }
-            Row(Modifier.fillMaxWidth().padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp), horizontalArrangement = Arrangement.SpaceBetween) {
                 Text("Categories", fontSize = 20.sp, fontFamily = medFont)
                 Icon(
                     imageVector = Icons.Default.KeyboardArrowRight,
@@ -1630,9 +1168,11 @@ fun Navbar(navControl: NavHostController) {
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.horizontalScroll(
-                    rememberScrollState()
-                ).padding(horizontal = 20.dp)
+                modifier = Modifier
+                    .horizontalScroll(
+                        rememberScrollState()
+                    )
+                    .padding(horizontal = 20.dp)
             ) {
                 Column(
                     verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -1732,6 +1272,185 @@ fun Navbar(navControl: NavHostController) {
             }
         } }
 }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchBar(navControl: NavHostController,appView: JollyView) {
+    Scaffold(containerColor = White26, bottomBar = {
+        BottomAppBar(Modifier.fillMaxWidth(), containerColor = Color.Transparent) {
+            NavigationBarItem(
+                selected = false,
+                onClick = { navControl.navigate("home page")},
+                icon = {
+                    Icon(
+                        painter = painterResource(
+                            id = R.drawable.home_icon
+                        ),
+                        contentDescription = "home icon",
+                        modifier = Modifier.size(24.dp, 24.dp)
+                    )
+                },
+                label = { Text("Home",fontFamily = regFont, fontSize = 14.sp) },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = SeaGreen,
+                    selectedTextColor = SeaGreen,
+                    unselectedIconColor = Brown,
+                    unselectedTextColor = Brown
+                )
+            )
+            NavigationBarItem(
+                selected = true,
+                onClick = {},
+                icon = {
+                    Icon(
+                        painter = painterResource(
+                            id = R.drawable.search
+                        ),
+                        contentDescription = "Search Icon",
+                        modifier = Modifier.size(24.dp, 24.dp)
+                    )
+                },
+                label = { Text("Search",fontFamily = regFont, fontSize = 14.sp) },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = SeaGreen,
+                    selectedTextColor = SeaGreen,
+                    unselectedIconColor = Brown,
+                    unselectedTextColor = Brown
+                )
+            )
+            NavigationBarItem(
+                selected = false,
+                onClick = { },
+                icon = {
+                    Icon(
+                        painter = painterResource(
+                            id = R.drawable.map_pin
+                        ),
+                        contentDescription = "Navigation Icon",
+                        modifier = Modifier.size(24.dp, 24.dp)
+                    )
+                },
+                label = { Text("Navigation",fontFamily = regFont, fontSize = 14.sp) },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = SeaGreen,
+                    selectedTextColor = SeaGreen,
+                    unselectedIconColor = Brown,
+                    unselectedTextColor = Brown
+                )
+            )
+            NavigationBarItem(
+                selected = false,
+                onClick = { },
+                icon = {
+                    Icon(
+                        painter = painterResource(
+                            id = R.drawable.user
+                        ),
+                        contentDescription = "User Profile icon",
+                        modifier = Modifier.size(24.dp, 24.dp)
+                    )
+                },
+                label = { Text("Profile",fontFamily = regFont, fontSize = 14.sp) },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = SeaGreen,
+                    selectedTextColor = SeaGreen,
+                    unselectedIconColor = Brown,
+                    unselectedTextColor = Brown
+                )
+            )
+        }
+    }) { innerPadding ->
+        Column(Modifier.padding(innerPadding)) {
+            Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
+                OutlinedTextField(modifier = Modifier.fillMaxWidth(),
+                    value = appView.JData.searchTerm.value,
+                    onValueChange = { appView.JData.searchTerm.value = it },
+                    placeholder = { Text("Enter Search Term", fontFamily = regFont) },
+                    trailingIcon = {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "clickable search Icon",
+                            modifier = Modifier.clickable { }.size(24.dp, 24.dp),
+                            tint = SeaGreen
+                        )
+                    },colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown))
+                Text("Trending", fontSize = 20.sp, fontFamily = medFont)
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    Button(
+                        onClick = { /*TODO*/ },
+                        shape = RoundedCornerShape(8.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor= Color.Transparent)
+
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Start,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                "Cafe De Vie",
+                                fontSize = 16.sp,
+                                color = Brown,
+                                fontFamily = regFont
+                            )
+                        }
+                    }
+                    Button(
+                        onClick = { /*TODO*/ },
+                        shape = RoundedCornerShape(8.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor= Color.Transparent)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Start,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                "Nike Art Center",
+                                fontSize = 16.sp,
+                                color = Brown,
+                                fontFamily = regFont
+                            )
+                        }
+                    }
+                    Button(
+                        onClick = { /*TODO*/ },
+                        shape = RoundedCornerShape(8.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor= Color.Transparent)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Start,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                "Beauty Addicts",
+                                fontSize = 16.sp,
+                                color = Brown,
+                                fontFamily = regFont
+                            )
+                        }
+                    }
+                    Button(
+                        onClick = { /*TODO*/ },
+                        shape = RoundedCornerShape(8.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor= Color.Transparent)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Start,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text("House 43", fontSize = 16.sp, color = Brown, fontFamily = regFont)
+
+                        }
+                    }
+
+                }
+
+            }
+        }
+    }
+}
     @Composable
     fun MyHost(navControl: NavHostController, appView: JollyView) {
         NavHost(navController = navControl, startDestination = "First_Onboard") {
@@ -1753,11 +1472,8 @@ fun Navbar(navControl: NavHostController) {
             composable("Log in") {
                 LogIn(navControl, appView)
             }
-            composable("Home Page") {
+            composable("home page") {
                 HomePage(navControl)
-            }
-            composable("navbar") {
-                Navbar(navControl)
             }
             composable("Jabi Boat") {
                 JabiBoatClub(navControl)
@@ -1770,6 +1486,9 @@ fun Navbar(navControl: NavHostController) {
             }
             composable("blucabana") {
                 Blucabana(navControl)
+            }
+            composable("search bar") {
+                SearchBar(navControl,appView)
             }
 
         }
