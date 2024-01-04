@@ -487,7 +487,7 @@ fun HomePage(navControl: NavHostController) {
                     contentDescription = "profile pic of user",
                     modifier = Modifier
                         .size(40.dp, 40.dp)
-                        .clip(CircleShape)
+                        .clip(RoundedCornerShape(20.dp))
                         .clickable { })
             }
             Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
@@ -1167,6 +1167,9 @@ fun Blucabana(navControl: NavHostController) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Navbar(navControl: NavHostController) {
+    val scrollState = rememberScrollState()
+    val scrollStateT = rememberScrollState()
+    val verticalState = rememberScrollState()
     Scaffold(containerColor = White26, bottomBar = {
         BottomAppBar(Modifier.fillMaxWidth(), containerColor = White26) {
             NavigationBarItem(
@@ -1254,9 +1257,6 @@ fun Navbar(navControl: NavHostController) {
         Modifier
             .padding(innerPadding).fillMaxSize()
             .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        val scrollState = rememberScrollState()
-        val scrollStateT = rememberScrollState()
-        val verticalState = rememberScrollState()
             Column(
                 modifier = Modifier.padding(horizontal = 20.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
