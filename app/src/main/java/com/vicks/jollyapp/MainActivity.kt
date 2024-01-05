@@ -22,6 +22,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
@@ -66,6 +67,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -136,7 +138,8 @@ fun First_Onboard(navControl: NavHostController){
     Column(
         Modifier
             .fillMaxSize()
-            .padding(20.dp, 16.dp), verticalArrangement = Arrangement.spacedBy(32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            .padding(20.dp, 16.dp)
+            .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(id = R.drawable.searchi),
             contentDescription = "Picture of woman browsing Online",
@@ -181,7 +184,8 @@ fun Second_Onboard(navControl: NavHostController) {
     Column(
         Modifier
             .fillMaxSize()
-            .padding(20.dp, 16.dp), verticalArrangement = Arrangement.spacedBy(32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            .padding(20.dp, 16.dp)
+            .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(id = R.drawable.navii),
             contentDescription = "Picture of woman using map",
@@ -223,7 +227,8 @@ fun Last_Onboard(navControl: NavHostController) {
     Column(
         Modifier
             .fillMaxSize()
-            .padding(20.dp, 16.dp), verticalArrangement = Arrangement.spacedBy(40.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+            .padding(20.dp, 16.dp)
+            .verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(40.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
             painter = painterResource(id = R.drawable.trendyi),
             contentDescription = "Picture of woman browsing trending places on her phone",
@@ -278,7 +283,11 @@ fun SignUp(navControl: NavHostController,appView: JollyView) {
         var chide by remember{ mutableStateOf(false) }
 
 
-    Column(verticalArrangement = Arrangement.spacedBy(40.dp),modifier=Modifier.padding(20.dp,32.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(40.dp),modifier= Modifier
+        .padding(20.dp, 32.dp)
+        .verticalScroll(
+            rememberScrollState()
+        )) {
        Row(horizontalArrangement = Arrangement.Start){
            Text("Create an Account", fontSize = 24.sp, fontFamily = medFont)
 
@@ -292,6 +301,7 @@ fun SignUp(navControl: NavHostController,appView: JollyView) {
                 colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown),
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                 trailingIcon = {Icon(painterResource(id = R.drawable.baseline_cancel_24),"icon of cancel ",Modifier.size(20.dp,20.dp),tint=grey)}
                 )
             OutlinedTextField(
@@ -379,7 +389,11 @@ fun LogIn(navControl: NavHostController,appView: JollyView) {
     var checkVal by remember{ mutableStateOf(false) }
     var visible by remember{ mutableStateOf(false) }
 
-    Column(verticalArrangement = Arrangement.spacedBy(40.dp),modifier=Modifier.padding(20.dp,32.dp)) {
+    Column(verticalArrangement = Arrangement.spacedBy(40.dp),modifier= Modifier
+        .padding(20.dp, 32.dp)
+        .verticalScroll(
+            rememberScrollState()
+        )) {
         Row(horizontalArrangement = Arrangement.Start){
             Text("Welcome Back", fontSize = 24.sp, fontFamily = medFont)
 
@@ -391,6 +405,8 @@ fun LogIn(navControl: NavHostController,appView: JollyView) {
                 label = { Text("Email") },
                 placeholder = { Text("Enter your email") },
                 colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+
                 modifier = Modifier
                     .fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp),
@@ -1359,7 +1375,10 @@ fun SearchBar(navControl: NavHostController,appView: JollyView) {
             )
         }
     }) { innerPadding ->
-        Column(Modifier.padding(innerPadding)) {
+        Column(
+            Modifier
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())) {
             Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(20.dp)) {
                 OutlinedTextField(modifier = Modifier.fillMaxWidth(),
                     value = appView.JData.searchTerm.value,
@@ -1369,7 +1388,9 @@ fun SearchBar(navControl: NavHostController,appView: JollyView) {
                         Icon(
                             imageVector = Icons.Default.Search,
                             contentDescription = "clickable search Icon",
-                            modifier = Modifier.clickable { }.size(24.dp, 24.dp),
+                            modifier = Modifier
+                                .clickable { }
+                                .size(24.dp, 24.dp),
                             tint = SeaGreen
                         )
                     },colors = TextFieldDefaults.outlinedTextFieldColors(textColor = Brown))
